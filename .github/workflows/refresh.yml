@@ -1,27 +1,51 @@
-name: Refresh ESPN Data
+name: Refresh RosterIQ data
+
 on:
   push:
+    branches: [main]
   workflow_dispatch: {}
   schedule:
-    - cron: '0 */6 * * *'
+    # Every 15 minutes. GitHub's scheduler is best-effort and gets slower under
+    # load, so treat this as "roughly every 15-30 minutes", not a guarantee.
+    # data/meta.json carries the real generatedAt timestamp, and the app shows it.
+    - cron: '*/15 * * * *'
+
 permissions:
   contents: write
+
+concurrency:
+  group: refresh
+  cancel-in-progress: false
+
 jobs:
   refresh:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - run: pip install espn_api
-      - run: python refresh_leagues.py
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install espn_api nfl_data_py pandas pyarrow
+
+      - name: Refresh all sources
         env:
           ESPN_S2: ${{ secrets.ESPN_S2 }}
           ESPN_SWID: ${{ secrets.ESPN_SWID }}
-      - run: |
+        run: python refresh_all.py
+
+      - name: Commit changed data
+        run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/leagues.json
-          git diff --quiet --cached || git commit -m "Auto-refresh"
-          git push
+          git add data/
+          if git diff --quiet --cached; then
+            echo "No data changes."
+          else
+            git commit -m "Auto-refresh $(date -u +'%Y-%m-%dT%H:%MZ')"
+            git push
+          fi
