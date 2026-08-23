@@ -1,0 +1,66 @@
+{
+  "league_name": "Ole Sports",
+  "scoring_type": "H2H_POINTS",
+  "teams": [
+    {
+      "team_name": "Philly Phutbol",
+      "wins": 0,
+      "losses": 0,
+      "roster": []
+    },
+    {
+      "team_name": "Stop Ryan 2024",
+      "wins": 0,
+      "losses": 0,
+      "roster": []
+    },
+    {
+      "team_name": "DeVonta's Inferno",
+      "wins": 0,
+      "losses": 0,
+      "roster": []
+    },
+    {
+      "team_name": "Nick Saved the Eagles",
+      "wins": 0,
+      "losses": 0,
+      "roster": []
+    },
+    {
+      "team_name": "Coach Tim Long",
+      "wins": 0,
+      "losses": 0,
+      "roster": []
+    },
+    {
+      "team_name": "Stone Cold Team Austin",
+      "wins": 0,
+      "losses": 0,
+      "roster": []
+    },
+    {
+      "team_name": "The  Law",
+      "wins": 0,
+      "losses": 0,
+      "roster": []
+    },
+    {
+      "team_name": "Aw Skeet Skeet",
+      "wins": 0,
+      "losses": 0,
+      "roster": []
+    },
+    {
+      "team_name": "Jerrys Foot Rub",
+      "wins": 0,
+      "losses": 0,
+      "roster": []
+    },
+    {
+      "team_name": "Team Name TBD",
+      "wins": 0,
+      "losses": 0,
+      "roster": []
+    }
+  ]
+}
