@@ -303,7 +303,7 @@ def fetch_projections(season, week):
 NFLVERSE_COLS = {
     "passing_yards": "passing_yards",
     "passing_tds": "passing_tds",
-    "interceptions": "interceptions",
+    "interceptions": "passing_interceptions",
     "passing_2pt_conversions": "passing_2pt_conversions",
     "rushing_yards": "rushing_yards",
     "rushing_tds": "rushing_tds",
@@ -327,11 +327,19 @@ def build_stats_and_crosswalk(preferred_season):
     import pandas as pd  # noqa: F401  (import kept local so a missing dep is a clean failure)
     import nfl_data_py as nfl
 
+    # nfl_data_py's import_weekly_data() is hardcoded to the "player_stats" release,
+    # which nflverse deprecated 2025-08-01 in favor of "stats_player" and stopped
+    # updating -- it 404s for any season after the split. Fetch the parquet directly
+    # from the current release instead of going through that helper.
     used_season = None
     weekly = None
     for season in (preferred_season, preferred_season - 1):
         try:
-            df = nfl.import_weekly_data([season])
+            url = (
+                "https://github.com/nflverse/nflverse-data/releases/download/"
+                f"stats_player/stats_player_week_{season}.parquet"
+            )
+            df = pd.read_parquet(url, engine="auto")
         except Exception as e:  # noqa: BLE001
             STATUS["warnings"].append(f"weekly {season}: {e}")
             continue
@@ -350,7 +358,7 @@ def build_stats_and_crosswalk(preferred_season):
 
     agg = {c: "sum" for c in NFLVERSE_COLS.values()}
     agg["week"] = "count"
-    grouped = weekly.groupby(["player_id", "player_display_name", "position", "recent_team"], dropna=False).agg(agg).reset_index()
+    grouped = weekly.groupby(["player_id", "player_display_name", "position", "team"], dropna=False).agg(agg).reset_index()
 
     players = []
     for _, r in grouped.iterrows():
@@ -360,7 +368,7 @@ def build_stats_and_crosswalk(preferred_season):
             "gsis_id": r["player_id"],
             "player_name": r["player_display_name"],
             "position": r["position"],
-            "team": r["recent_team"],
+            "team": r["team"],
             "games_played": int(r["week"]),
         }
         for key, col in NFLVERSE_COLS.items():
