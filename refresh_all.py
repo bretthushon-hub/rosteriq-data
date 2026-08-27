@@ -471,6 +471,13 @@ def fetch_espn():
         "league_name": lg.settings.name,
         "scoring_type": lg.settings.scoring_type,
         "current_week": getattr(lg, "current_week", None),
+        "team_count": getattr(lg.settings, "team_count", len(lg.teams)),
+        "playoff_team_count": getattr(lg.settings, "playoff_team_count", None),
+        "reg_season_count": getattr(lg.settings, "reg_season_count", None),
+        "trade_deadline": getattr(lg.settings, "trade_deadline", None),
+        "faab": getattr(lg.settings, "faab", None),
+        "acquisition_budget": getattr(lg.settings, "acquisition_budget", None),
+        "position_slot_counts": getattr(lg.settings, "position_slot_counts", None),
         "teams": [{
             "team_id": t.team_id,
             "team_name": t.team_name,
@@ -495,6 +502,7 @@ def fetch_espn():
                 "projected_avg": getattr(p, "projected_avg_points", None),
                 "injury_status": p.injuryStatus,
                 "injured": getattr(p, "injured", None),
+                "lineup_slot": getattr(p, "lineupSlot", None),
             } for p in t.roster],
         } for t in lg.teams],
     }
