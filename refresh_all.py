@@ -466,7 +466,7 @@ def fetch_espn():
         espn_s2=os.environ["ESPN_S2"],
         swid=os.environ["ESPN_SWID"],
     )
-    return {
+    out = {
         "league_name": lg.settings.name,
         "scoring_type": lg.settings.scoring_type,
         "current_week": getattr(lg, "current_week", None),
@@ -476,6 +476,14 @@ def fetch_espn():
             "wins": t.wins,
             "losses": t.losses,
             "points_for": getattr(t, "points_for", None),
+            "standing": getattr(t, "standing", None),
+            "playoff_pct": getattr(t, "playoff_pct", None),
+            "waiver_rank": getattr(t, "waiver_rank", None),
+            "acquisitions": getattr(t, "acquisitions", None),
+            "acquisition_budget_spent": getattr(t, "acquisition_budget_spent", None),
+            "trades": getattr(t, "trades", None),
+            "streak_type": getattr(t, "streak_type", None),
+            "streak_length": getattr(t, "streak_length", None),
             "roster": [{
                 "name": p.name,
                 "espn_id": getattr(p, "playerId", None),
@@ -489,6 +497,57 @@ def fetch_espn():
             } for p in t.roster],
         } for t in lg.teams],
     }
+
+    # current-week matchups -- who's playing whom, and the live score if the
+    # week is underway. Best-effort: a missing scoreboard shouldn't sink the
+    # roster pull above, which is the part everything else depends on.
+    try:
+        out["matchups"] = [{
+            "home_team_id": m._home_team_id,
+            "home_score": m.home_score,
+            "away_team_id": m._away_team_id,
+            "away_score": m.away_score,
+            "is_playoff": m.is_playoff,
+        } for m in lg.scoreboard()]
+    except Exception as e:  # noqa: BLE001
+        STATUS["warnings"].append(f"espn.matchups: {e}")
+        out["matchups"] = []
+
+    # recent adds/drops/trades/waiver claims league-wide, newest first.
+    try:
+        rows = []
+        for act in lg.recent_activity(size=25):
+            for team, action, player, bid in act.actions:
+                rows.append({
+                    "date": act.date,
+                    "team_name": getattr(team, "team_name", None) if team else None,
+                    "action": action,
+                    "player_name": getattr(player, "name", None) if hasattr(player, "name") else str(player),
+                    "bid_amount": bid,
+                })
+        out["transactions"] = rows
+    except Exception as e:  # noqa: BLE001
+        STATUS["warnings"].append(f"espn.transactions: {e}")
+        out["transactions"] = []
+
+    # free agent pool, top names by roster ownership so the list favors
+    # widely-added/droppable players over deep-bench noise.
+    try:
+        fas = lg.free_agents(size=100)
+        fas.sort(key=lambda p: getattr(p, "percent_owned", 0) or 0, reverse=True)
+        out["free_agents"] = [{
+            "name": p.name,
+            "position": p.position,
+            "pro_team": p.proTeam,
+            "percent_owned": getattr(p, "percent_owned", None),
+            "projected_avg": getattr(p, "projected_avg_points", None),
+            "injury_status": p.injuryStatus,
+        } for p in fas[:60]]
+    except Exception as e:  # noqa: BLE001
+        STATUS["warnings"].append(f"espn.free_agents: {e}")
+        out["free_agents"] = []
+
+    return out
 
 
 # ------------------------------------------------------------------- main
