@@ -423,6 +423,7 @@ def fetch_dynasty_values():
                 "team": cell(row, "team"),
                 "age": float(cell(row, "age") or 0) or None,
                 "ecr_1qb": float(cell(row, "ecr_1qb") or 0) or None,
+                "ecr_pos": float(cell(row, "ecr_pos") or 0) or None,
                 "value_1qb": int(float(cell(row, "value_1qb") or 0)),
                 "value_2qb": int(float(cell(row, "value_2qb") or 0)),
                 "fp_id": cell(row, "fp_id") or None,
