@@ -406,30 +406,27 @@ def build_stats_and_crosswalk(preferred_season):
 
 def fetch_dynasty_values():
     """DynastyProcess publishes current market values as CSV on GitHub."""
-    txt = get_text("https://raw.githubusercontent.com/DynastyProcess/data/master/files/values-players.csv")
-    lines = [l for l in txt.splitlines() if l.strip()]
-    head = [h.strip() for h in lines[0].split(",")]
-    idx = {h: i for i, h in enumerate(head)}
+    import csv
+    import io
 
-    def cell(parts, key):
-        i = idx.get(key)
-        return parts[i].strip() if i is not None and i < len(parts) else ""
+    txt = get_text("https://raw.githubusercontent.com/DynastyProcess/data/master/files/values-players.csv")
+
+    def cell(row, key):
+        return (row.get(key) or "").strip()
 
     rows = []
-    for line in lines[1:]:
-        # values-players.csv has no embedded commas in the fields we read
-        parts = line.split(",")
+    for row in csv.DictReader(io.StringIO(txt)):
         try:
             rows.append({
-                "player": cell(parts, "player"),
-                "position": cell(parts, "pos"),
-                "team": cell(parts, "team"),
-                "age": float(cell(parts, "age") or 0) or None,
-                "ecr_1qb": float(cell(parts, "ecr_1qb") or 0) or None,
-                "value_1qb": int(float(cell(parts, "value_1qb") or 0)),
-                "value_2qb": int(float(cell(parts, "value_2qb") or 0)),
-                "fp_id": cell(parts, "fp_id") or None,
-                "scrape_date": cell(parts, "scrape_date") or None,
+                "player": cell(row, "player"),
+                "position": cell(row, "pos"),
+                "team": cell(row, "team"),
+                "age": float(cell(row, "age") or 0) or None,
+                "ecr_1qb": float(cell(row, "ecr_1qb") or 0) or None,
+                "value_1qb": int(float(cell(row, "value_1qb") or 0)),
+                "value_2qb": int(float(cell(row, "value_2qb") or 0)),
+                "fp_id": cell(row, "fp_id") or None,
+                "scrape_date": cell(row, "scrape_date") or None,
             })
         except Exception:  # noqa: BLE001 - skip malformed rows rather than dying
             continue
