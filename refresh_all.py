@@ -439,8 +439,11 @@ def link_fantasypros_ids(id_map, dyn):
     The dynasty file keys on FantasyPros ids; the crosswalk doesn't carry them.
     Join on normalised name + position, which is what the original export did.
     """
+    SUFFIXES = {"jr", "sr", "ii", "iii", "iv", "v"}
+
     def norm(s):
-        return "".join(ch for ch in (s or "").lower() if ch.isalnum())
+        words = [w for w in (s or "").lower().split() if w.strip(".") not in SUFFIXES]
+        return "".join(ch for ch in " ".join(words) if ch.isalnum())
 
     by_name = {}
     for d in dyn:
