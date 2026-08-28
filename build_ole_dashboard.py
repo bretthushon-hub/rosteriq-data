@@ -27,9 +27,17 @@ Real data in, real numbers out -- nothing here is a placeholder or a guess:
     inputs -- a redraft league has no rookie-pick capital or age-curve
     concept to model, so nothing is invented in their place.
 """
+import datetime
 import json
 import sys
 from collections import defaultdict
+
+# Real 2026 NFL regular-season kickoff, matching what the app's own live.state.seasonStart
+# uses elsewhere. ESPN's trade_deadline is a real epoch-ms timestamp; the shared Decisions-tab
+# template expects Sleeper's convention instead (a week number, with 99 meaning "no deadline"),
+# so convert rather than passing the raw epoch through -- passing it raw reads as "no deadline"
+# since any real epoch ms value is always >= 99.
+SEASON_START = datetime.datetime(2026, 9, 13, tzinfo=datetime.timezone.utc)
 
 REPO = "data"
 MY_TEAM_ID = 9
@@ -309,6 +317,13 @@ def build():
     unmatched_count = len(my_team["roster"]) - len(roster)
 
     # LIVE.ole entry: settings + liveRoster (real starters via lineup_slot) + a player-status map
+    trade_deadline_ms = leagues.get("trade_deadline") or 0
+    if trade_deadline_ms:
+        deadline_dt = datetime.datetime.fromtimestamp(trade_deadline_ms / 1000, tz=datetime.timezone.utc)
+        trade_deadline_week = max(1, (deadline_dt - SEASON_START).days // 7 + 1)
+    else:
+        trade_deadline_week = 99  # sentinel the shared template reads as "no deadline"
+
     psc = leagues.get("position_slot_counts") or {}
     roster_positions = (
         ["QB"] * psc.get("QB", 1) + ["RB"] * psc.get("RB", 2) + ["WR"] * psc.get("WR", 2) + ["TE"] * psc.get("TE", 1)
@@ -319,7 +334,7 @@ def build():
         "leagueId": "267341", "rosterPositions": roster_positions,
         "slots": {"QB": psc.get("QB", 1), "RB": psc.get("RB", 2), "WR": psc.get("WR", 2), "TE": psc.get("TE", 1), "FLEX": psc.get("RB/WR/TE", 0)},
         "qbEligible": psc.get("QB", 1), "flex": psc.get("RB/WR/TE", 0), "hasDef": bool(psc.get("D/ST")),
-        "tradeDeadline": leagues.get("trade_deadline") or 99, "playoffWeekStart": (leagues.get("reg_season_count") or 13) + 1,
+        "tradeDeadline": trade_deadline_week, "playoffWeekStart": (leagues.get("reg_season_count") or 13) + 1,
         "waiverType": 0 if leagues.get("faab") else 1, "waiverBudget": leagues.get("acquisition_budget") or 0,
         "waiverDayOfWeek": 2, "numTeams": leagues.get("team_count") or n_teams, "playoffTeams": leagues.get("playoff_team_count") or 4,
         "startWeek": 1, "waiverPosition": waiver_rank,
@@ -329,6 +344,7 @@ def build():
     live_players_ids = [p["espn_id"] for p in my_team["roster"]]
     live_record = {"wins": my_team["wins"], "losses": my_team["losses"], "ties": 0, "fpts": 0, "totalMoves": 0}
     live_player_map = {}
+    live_by_name = {}
     for t in teams:
         for p in t["roster"]:
             live_player_map[p["espn_id"]] = {
@@ -336,13 +352,14 @@ def build():
                 "status": "Active" if not p["injured"] else (p["injury_status"] or "Out"),
                 "injuryStatus": p["injury_status"], "bodyPart": None,
             }
+            live_by_name[p["name"]] = p["espn_id"]
 
     return {
         "roster": roster, "leagueRosters": league_rosters, "unmatchedCount": unmatched_count,
         "health": health, "weeklyFocus": weekly_focus, "coachActions": coach_actions,
         "weeklyTrades": trades, "signals": signals, "freeAgents": free_agents_out,
         "liveSettings": live_settings, "liveStarters": live_starters, "livePlayersIds": live_players_ids,
-        "liveRecord": live_record, "livePlayerMap": live_player_map,
+        "liveRecord": live_record, "livePlayerMap": live_player_map, "liveByName": live_by_name,
         "myTeamId": MY_TEAM_ID, "myTeamName": MY_TEAM_NAME,
     }
 
