@@ -11,98 +11,6 @@ Collecting six>=1.5 (from python-dateutil>=2.8.2->pandas>=2.0)
   Downloading six-1.17.0-py2.py3-none-any.whl.metadata (1.7 kB)
 Downloading nfl_data_py-0.3.2-py3-none-any.whl (13 kB)
 Downloading pandas-3.0.5-cp311-cp311-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl (11.3 MB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 11.3/11.3 MB 225.7 MB/s  0:00:00
-Downloading pyarrow-25.0.1-cp311-cp311-manylinux_2_28_x86_64.whl (50.1 MB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 50.1/50.1 MB 230.9 MB/s  0:00:00
-Downloading appdirs-1.4.4-py2.py3-none-any.whl (9.6 kB)
-Downloading fastparquet-2026.5.0-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (1.9 MB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.9/1.9 MB 237.4 MB/s  0:00:00
-Downloading cramjam-2.12.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (2.0 MB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.0/2.0 MB 226.2 MB/s  0:00:00
-Downloading numpy-2.4.6-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (16.9 MB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 16.9/16.9 MB 256.7 MB/s  0:00:00
-Downloading python_dateutil-2.9.0.post0-py2.py3-none-any.whl (229 kB)
-Downloading six-1.17.0-py2.py3-none-any.whl (11 kB)
-Downloading fsspec-2026.7.0-py3-none-any.whl (206 kB)
-Downloading packaging-26.3-py3-none-any.whl (129 kB)
-Installing collected packages: appdirs, six, pyarrow, packaging, numpy, fsspec, cramjam, python-dateutil, pandas, fastparquet, nfl_data_py
-
-Successfully installed appdirs-1.4.4 cramjam-2.12.1 fastparquet-2026.5.0 fsspec-2026.7.0 nfl_data_py-0.3.2 numpy-2.4.6 packaging-26.3 pandas-3.0.5 pyarrow-25.0.1 python-dateutil-2.9.0.post0 six-1.17.0
---- nflverse install outcome: success
---- installed packages:
-espn-api           0.46.0
-nfl_data_py        0.3.2
-numpy              2.4.6
-pandas             3.0.5
-pyarrow            25.0.1
---- refresh_all.py starting 2026-08-29T12:20:59Z
-  ok  sleeper.state :: pre wk3 2026
-  ok  sleeper.schedule :: 32 teams
-  ok  sleeper.league.feeg :: 12 rosters, 60 tx
-  ok  sleeper.league.hobby :: 12 rosters, 60 tx
-  ok  sleeper.trending.add :: 25 rows
-  ok  sleeper.trending.drop :: 25 rows
-  ok  sleeper.players :: 732 kept, 142 carrying a designation
-  wrote data/live.json (296,085 bytes)
-  wrote data/projections.json (64,926 bytes)
-  ok  sleeper.projections :: season 2026 wk1, 972 players
-  ok  nflverse.stats :: season 2025, 685 players, 3133 crosswalk rows
-  wrote data/dynastyprocess_values.json (71,918 bytes)
-  ok  dynastyprocess.values :: 419 rows, scraped 2026-08-28
-  ok  crosswalk.fantasypros :: 352/3133 linked
-  wrote data/player_season_stats.json (295,068 bytes)
-  wrote data/player_id_map.json (585,220 bytes)
-  wrote data/leagues.json (42,363 bytes)
-  ok  espn.league :: 10 teams, 161 rostered players
-  wrote data/meta.json (967 bytes)
---- refresh_all.py outcome: success
---- run finished 2026-08-29T12:21:05Z
---- run url: https://github.com/bretthushon-hub/rosteriq-data/actions/runs/33252261831
-Python 3.11.16
-Requirement already satisfied: pip in /opt/hostedtoolcache/Python/3.11.16/x64/lib/python3.11/site-packages (26.2.1)
-  Downloading espn_api-0.46.0-py3-none-any.whl.metadata (3.8 kB)
-Collecting requests<3.0.0,>=2.0.0 (from espn_api)
-  Downloading requests-2.34.2-py3-none-any.whl.metadata (4.8 kB)
-Collecting urllib3<=2.2.3 (from espn_api)
-  Downloading urllib3-2.2.3-py3-none-any.whl.metadata (6.5 kB)
-Collecting charset_normalizer<4,>=2 (from requests<3.0.0,>=2.0.0->espn_api)
-  Downloading charset_normalizer-3.5.1-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (45 kB)
-Collecting idna<4,>=2.5 (from requests<3.0.0,>=2.0.0->espn_api)
-  Downloading idna-3.19-py3-none-any.whl.metadata (9.2 kB)
-Collecting certifi>=2023.5.7 (from requests<3.0.0,>=2.0.0->espn_api)
-  Downloading certifi-2026.7.22-py3-none-any.whl.metadata (2.5 kB)
-Downloading espn_api-0.46.0-py3-none-any.whl (69 kB)
-Downloading requests-2.34.2-py3-none-any.whl (73 kB)
-Downloading charset_normalizer-3.5.1-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (262 kB)
-Downloading idna-3.19-py3-none-any.whl (68 kB)
-Downloading urllib3-2.2.3-py3-none-any.whl (126 kB)
-Downloading certifi-2026.7.22-py3-none-any.whl (136 kB)
-Installing collected packages: urllib3, idna, charset_normalizer, certifi, requests, espn_api
-
-Successfully installed certifi-2026.7.22 charset_normalizer-3.5.1 espn_api-0.46.0 idna-3.19 requests-2.34.2 urllib3-2.2.3
-Collecting numpy<2.0,>=1.0 (from nfl_data_py)
-  Downloading numpy-1.26.4-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (61 kB)
-INFO: pip is looking at multiple versions of nfl-data-py to determine which version is compatible with other requirements. This could take a while.
-Collecting nfl_data_py
-  Downloading nfl_data_py-0.3.2-py3-none-any.whl.metadata (11 kB)
-Collecting appdirs>1 (from nfl_data_py)
-  Downloading appdirs-1.4.4-py2.py3-none-any.whl.metadata (9.0 kB)
-Collecting fastparquet>0.5 (from nfl_data_py)
-  Downloading fastparquet-2026.5.0-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (4.8 kB)
-Collecting numpy>=1.26.0 (from pandas>=2.0)
-  Downloading numpy-2.4.6-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (6.6 kB)
-Collecting python-dateutil>=2.8.2 (from pandas>=2.0)
-  Downloading python_dateutil-2.9.0.post0-py2.py3-none-any.whl.metadata (8.4 kB)
-Collecting cramjam>=2.3 (from fastparquet>0.5->nfl_data_py)
-  Downloading cramjam-2.12.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (1.2 kB)
-Collecting fsspec (from fastparquet>0.5->nfl_data_py)
-  Downloading fsspec-2026.7.0-py3-none-any.whl.metadata (10 kB)
-Collecting packaging (from fastparquet>0.5->nfl_data_py)
-  Downloading packaging-26.3-py3-none-any.whl.metadata (3.5 kB)
-Collecting six>=1.5 (from python-dateutil>=2.8.2->pandas>=2.0)
-  Downloading six-1.17.0-py2.py3-none-any.whl.metadata (1.7 kB)
-Downloading nfl_data_py-0.3.2-py3-none-any.whl (13 kB)
-Downloading pandas-3.0.5-cp311-cp311-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl (11.3 MB)
    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 11.3/11.3 MB 66.2 MB/s  0:00:00
 Downloading pyarrow-25.0.1-cp311-cp311-manylinux_2_28_x86_64.whl (50.1 MB)
    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 50.1/50.1 MB 314.3 MB/s  0:00:00
@@ -886,3 +794,95 @@ pyarrow            25.0.1
 --- refresh_all.py outcome: success
 --- run finished 2026-08-29T14:35:54Z
 --- run url: https://github.com/bretthushon-hub/rosteriq-data/actions/runs/33258007559
+Python 3.11.16
+Requirement already satisfied: pip in /opt/hostedtoolcache/Python/3.11.16/x64/lib/python3.11/site-packages (26.2.1)
+  Downloading espn_api-0.46.0-py3-none-any.whl.metadata (3.8 kB)
+Collecting requests<3.0.0,>=2.0.0 (from espn_api)
+  Downloading requests-2.34.2-py3-none-any.whl.metadata (4.8 kB)
+Collecting urllib3<=2.2.3 (from espn_api)
+  Downloading urllib3-2.2.3-py3-none-any.whl.metadata (6.5 kB)
+Collecting charset_normalizer<4,>=2 (from requests<3.0.0,>=2.0.0->espn_api)
+  Downloading charset_normalizer-3.5.1-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (45 kB)
+Collecting idna<4,>=2.5 (from requests<3.0.0,>=2.0.0->espn_api)
+  Downloading idna-3.19-py3-none-any.whl.metadata (9.2 kB)
+Collecting certifi>=2023.5.7 (from requests<3.0.0,>=2.0.0->espn_api)
+  Downloading certifi-2026.7.22-py3-none-any.whl.metadata (2.5 kB)
+Downloading espn_api-0.46.0-py3-none-any.whl (69 kB)
+Downloading requests-2.34.2-py3-none-any.whl (73 kB)
+Downloading charset_normalizer-3.5.1-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (262 kB)
+Downloading idna-3.19-py3-none-any.whl (68 kB)
+Downloading urllib3-2.2.3-py3-none-any.whl (126 kB)
+Downloading certifi-2026.7.22-py3-none-any.whl (136 kB)
+Installing collected packages: urllib3, idna, charset_normalizer, certifi, requests, espn_api
+
+Successfully installed certifi-2026.7.22 charset_normalizer-3.5.1 espn_api-0.46.0 idna-3.19 requests-2.34.2 urllib3-2.2.3
+Collecting numpy<2.0,>=1.0 (from nfl_data_py)
+  Downloading numpy-1.26.4-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (61 kB)
+INFO: pip is looking at multiple versions of nfl-data-py to determine which version is compatible with other requirements. This could take a while.
+Collecting nfl_data_py
+  Downloading nfl_data_py-0.3.2-py3-none-any.whl.metadata (11 kB)
+Collecting appdirs>1 (from nfl_data_py)
+  Downloading appdirs-1.4.4-py2.py3-none-any.whl.metadata (9.0 kB)
+Collecting fastparquet>0.5 (from nfl_data_py)
+  Downloading fastparquet-2026.5.0-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (4.8 kB)
+Collecting numpy>=1.26.0 (from pandas>=2.0)
+  Downloading numpy-2.4.6-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (6.6 kB)
+Collecting python-dateutil>=2.8.2 (from pandas>=2.0)
+  Downloading python_dateutil-2.9.0.post0-py2.py3-none-any.whl.metadata (8.4 kB)
+Collecting cramjam>=2.3 (from fastparquet>0.5->nfl_data_py)
+  Downloading cramjam-2.12.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (1.2 kB)
+Collecting fsspec (from fastparquet>0.5->nfl_data_py)
+  Downloading fsspec-2026.7.0-py3-none-any.whl.metadata (10 kB)
+Collecting packaging (from fastparquet>0.5->nfl_data_py)
+  Downloading packaging-26.3-py3-none-any.whl.metadata (3.5 kB)
+Collecting six>=1.5 (from python-dateutil>=2.8.2->pandas>=2.0)
+  Downloading six-1.17.0-py2.py3-none-any.whl.metadata (1.7 kB)
+Downloading nfl_data_py-0.3.2-py3-none-any.whl (13 kB)
+Downloading pandas-3.0.5-cp311-cp311-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl (11.3 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 11.3/11.3 MB 293.1 MB/s  0:00:00
+Downloading pyarrow-25.0.1-cp311-cp311-manylinux_2_28_x86_64.whl (50.1 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 50.1/50.1 MB 339.9 MB/s  0:00:00
+Downloading appdirs-1.4.4-py2.py3-none-any.whl (9.6 kB)
+Downloading fastparquet-2026.5.0-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (1.9 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.9/1.9 MB 280.8 MB/s  0:00:00
+Downloading cramjam-2.12.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (2.0 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.0/2.0 MB 123.3 MB/s  0:00:00
+Downloading numpy-2.4.6-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (16.9 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 16.9/16.9 MB 330.3 MB/s  0:00:00
+Downloading python_dateutil-2.9.0.post0-py2.py3-none-any.whl (229 kB)
+Downloading six-1.17.0-py2.py3-none-any.whl (11 kB)
+Downloading fsspec-2026.7.0-py3-none-any.whl (206 kB)
+Downloading packaging-26.3-py3-none-any.whl (129 kB)
+Installing collected packages: appdirs, six, pyarrow, packaging, numpy, fsspec, cramjam, python-dateutil, pandas, fastparquet, nfl_data_py
+
+Successfully installed appdirs-1.4.4 cramjam-2.12.1 fastparquet-2026.5.0 fsspec-2026.7.0 nfl_data_py-0.3.2 numpy-2.4.6 packaging-26.3 pandas-3.0.5 pyarrow-25.0.1 python-dateutil-2.9.0.post0 six-1.17.0
+--- nflverse install outcome: success
+--- installed packages:
+espn-api           0.46.0
+nfl_data_py        0.3.2
+numpy              2.4.6
+pandas             3.0.5
+pyarrow            25.0.1
+--- refresh_all.py starting 2026-08-29T14:50:47Z
+  ok  sleeper.state :: pre wk3 2026
+  ok  sleeper.schedule :: 32 teams
+  ok  sleeper.league.feeg :: 12 rosters, 60 tx
+  ok  sleeper.league.hobby :: 12 rosters, 60 tx
+  ok  sleeper.trending.add :: 25 rows
+  ok  sleeper.trending.drop :: 25 rows
+  ok  sleeper.players :: 732 kept, 142 carrying a designation
+  wrote data/live.json (296,454 bytes)
+  wrote data/projections.json (64,926 bytes)
+  ok  sleeper.projections :: season 2026 wk1, 972 players
+  ok  nflverse.stats :: season 2025, 685 players, 3133 crosswalk rows
+  wrote data/dynastyprocess_values.json (71,918 bytes)
+  ok  dynastyprocess.values :: 419 rows, scraped 2026-08-28
+  ok  crosswalk.fantasypros :: 352/3133 linked
+  wrote data/player_season_stats.json (295,068 bytes)
+  wrote data/player_id_map.json (585,220 bytes)
+  wrote data/leagues.json (42,366 bytes)
+  ok  espn.league :: 10 teams, 161 rostered players
+  wrote data/meta.json (967 bytes)
+--- refresh_all.py outcome: success
+--- run finished 2026-08-29T14:50:53Z
+--- run url: https://github.com/bretthushon-hub/rosteriq-data/actions/runs/33258649583
